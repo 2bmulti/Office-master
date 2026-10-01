@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Master & Design Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        word: '#2B579A',
+                        excel: '#217346',
+                        powerpoint: '#B7472A',
+                        coreldraw: '#FF7300',
+                        photoshop: '#31A8FF',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-xl text-slate-900 tracking-tight block">Office Master</span>
+                    <span class="text-xs text-slate-500 font-medium">& Design Learning Hub</span>
+                </div>
+            </div>
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center space-x-1">
+                <button onclick="switchTab('home')" id="nav-home" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50">Beranda</button>
+                <button onclick="switchTab('word')" id="nav-word" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-word hover:bg-blue-50/50">MS Word</button>
+                <button onclick="switchTab('excel')" id="nav-excel" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-excel hover:bg-emerald-50/50">MS Excel</button>
+                <button onclick="switchTab('powerpoint')" id="nav-powerpoint" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-powerpoint hover:bg-orange-50/50">MS PowerPoint</button>
+                <button onclick="switchTab('coreldraw')" id="nav-coreldraw" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-amber-600 hover:bg-amber-50/50">CorelDRAW</button>
+                <button onclick="switchTab('photoshop')" id="nav-photoshop" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-sky-600 hover:bg-sky-50/50">Photoshop</button>
+                <button onclick="switchTab('about')" id="nav-about" class="px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-indigo-600 hover:bg-indigo-50/50">Tentang</button>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1.5 shadow-lg">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-blue-600 bg-blue-50">Beranda</button>
+            <button onclick="switchTab('word'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">MS Word</button>
+            <button onclick="switchTab('excel'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">MS Excel</button>
+            <button onclick="switchTab('powerpoint'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">MS PowerPoint</button>
+            <button onclick="switchTab('coreldraw'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">CorelDRAW</button>
+            <button onclick="switchTab('photoshop'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">Adobe Photoshop</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100">Tentang / About</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- ==================== TAB: HOME ==================== -->
+        <section id="tab-home" class="space-y-12 animate-fade-in">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white p-8 sm:p-14 shadow-2xl">
+                <div class="absolute -right-20 -top-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl space-y-6">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                        <i class="fa-solid fa-sparkles"></i> Pusat Pembelajaran Perkantoran & Desain Grafis
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Kuasai Software Perkantoran & Desain Profesional
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        Platform edukasi lengkap untuk mempelajari Microsoft Office, CorelDRAW, dan Adobe Photoshop dengan panduan materi, fungsi, serta kumpulan shortcut keyboard tercepat.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="switchTab('word')" class="px-6 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2">
+                            Mulai Belajar <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <button onclick="switchTab('about')" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold backdrop-blur-md border border-white/15 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-sm"></i> Tentang Pembuat
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Selection Grid -->
+            <div>
+                <div class="text-center space-y-2 mb-10">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Pilih Modul Pembelajaran</h2>
+                    <p class="text-slate-600 text-sm sm:text-base">Eksplorasi materi lengkap dari aplikasi pengolah kata, angka, presentasi hingga desain vektor & raster.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- MS Word Card -->
+                    <div onclick="switchTab('word')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-blue-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/15 transition-all"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-3xl shadow-lg shadow-blue-600/30 mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-file-word"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Microsoft Word</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Pengolah kata standar industri untuk pembuatan surat, laporan profesional, makalah, dan dokumen pengetikan lainnya.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-blue-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari Word</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- MS Excel Card -->
+                    <div onclick="switchTab('excel')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/15 transition-all"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center text-white text-3xl shadow-lg shadow-emerald-600/30 mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-file-excel"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Microsoft Excel</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Aplikasi spreadsheet canggih untuk perhitungan rumus matematika, tabel data, VLOOKUP, dan analisis keuangan.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-emerald-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari Excel</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- MS PowerPoint Card -->
+                    <div onclick="switchTab('powerpoint')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-orange-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/15 transition-all"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white text-3xl shadow-lg shadow-orange-600/30 mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-file-powerpoint"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Microsoft PowerPoint</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Media presentasi visual interaktif untuk menyampaikan materi, ide kreatif, atau pitch deck bisnis dengan slide memukau.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-orange-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari PowerPoint</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- CorelDRAW Card -->
+                    <div onclick="switchTab('coreldraw')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-amber-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/15 transition-all"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-3xl shadow-lg shadow-amber-600/30 mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-pen-nib"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">CorelDRAW</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Software desain grafis berbasis vektor terkemuka untuk pembuatan logo, brosur, banner, sablon kaos, dan ilustrasi digital.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-amber-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari CorelDRAW</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- Adobe Photoshop Card -->
+                    <div onclick="switchTab('photoshop')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-sky-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full blur-2xl group-hover:bg-sky-500/15 transition-all"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-sky-500 flex items-center justify-center text-white text-3xl shadow-lg shadow-sky-600/30 mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Adobe Photoshop</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Software pengolah gambar raster dan foto terbaik untuk manipulasi foto, poster digital, UI design, dan seni digital.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-sky-600 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari Photoshop</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- About Card -->
+                    <div onclick="switchTab('about')" class="group glass-card rounded-3xl p-7 cursor-pointer hover:shadow-xl hover:border-indigo-300 transition-all duration-300 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-slate-900 to-indigo-950 text-white">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl"></div>
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white text-3xl shadow-lg mb-6 group-hover:scale-110 transition-transform border border-white/20">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Tentang Pengembang</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                                Mengenal profil pembuat platform Office Master: <strong>Muhammad David Beckham</strong> serta sejarah Microsoft Office.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-indigo-300 font-bold text-sm group-hover:translate-x-1 transition-transform">
+                            <span>Lihat Profil</span>
+                            <i class="fa-solid fa-chevron-right ml-2 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: MS WORD ==================== -->
+        <section id="tab-word" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/20 text-blue-100">
+                        <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4V4zm2 2v14h12V9h-5V4H6zm7 4h4.5L13 14.5V10z"/></svg> Microsoft Word Module
+                    </div>
+                    <h2 class="text-3xl font-extrabold">Microsoft Word</h2>
+                    <p class="text-blue-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Pengolah kata profesional untuk membuat surat, laporan, karya ilmiah, skripsi, dan dokumen resmi dengan format tata letak yang sempurna.
+                    </p>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center p-3 text-blue-600 text-4xl font-black shrink-0">
+                    <i class="fa-solid fa-file-word"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-blue-600"></i> Pengertian & Fungsi Microsoft Word
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>Microsoft Word</strong> adalah program aplikasi pengolah kata (word processor) buatan Microsoft Corporation. Fungsi utamanya adalah membantu pengguna menyelesaikan pekerjaan pengetikan dokumen, mulai dari surat menyurat resmi, pembuatan proposal, penulisan buku, hingga pembuatan tabel dan penyisipan grafik sederhana.
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-blue-600"></i> Fitur Utama MS Word
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Formatting Teks & Paragraf</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengatur jenis huruf, ukuran, warna, perataan paragraf (rata kiri/kanan/tengah), dan spasi.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-table"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Penyisipan Tabel & Gambar</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Memasukkan tabel data, gambar ilustrasi, bentuk geometris, serta diagram SmartArt.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-envelope-open-text"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Mail Merge</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Fitur otomatis untuk membuat surat massal undangan atau amplop berdasarkan database excel.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-print"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Cetak & Ekspor Dokumen</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mencetak dokumen ke printer atau menyimpannya langsung ke format PDF atau XPS.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts List for Word -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 sticky top-24 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-blue-600"></i> Shortcut MS Word
+                            </h4>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">17 Shortcut</span>
+                        </div>
+                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="word-shortcuts-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: MS EXCEL ==================== -->
+        <section id="tab-excel" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-gradient-to-r from-emerald-700 to-teal-800 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/20 text-emerald-100">
+                        <i class="fa-solid fa-file-excel"></i> Microsoft Excel Module
+                    </div>
+                    <h2 class="text-3xl font-extrabold">Microsoft Excel</h2>
+                    <p class="text-emerald-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Aplikasi spreadsheet elektronik untuk mengelola data angka, perhitungan rumus matematika, fungsi logika, dan grafik analisis bisnis.
+                    </p>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center p-3 text-emerald-600 text-4xl font-black shrink-0">
+                    <i class="fa-solid fa-file-excel"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-emerald-600"></i> Pengertian & Fungsi Microsoft Excel
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>Microsoft Excel</strong> adalah program aplikasi spreadsheet yang dikembangkan oleh Microsoft. Excel menggunakan lembar kerja berupa sel (pertemuan baris dan kolom) untuk mengelola data numerik, melakukan perhitungan otomatis menggunakan rumus dan fungsi, serta menyajikan data dalam bentuk grafik visual yang informatif.
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-emerald-600"></i> Fitur Utama MS Excel
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-calculator"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Rumus & Fungsi Formula</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Perhitungan instan menggunakan SUM, AVERAGE, COUNT, IF, VLOOKUP, hingga XLOOKUP.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Grafik & Chart Analisis</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengubah tabel angka mentah menjadi diagram batang, garis, atau pie chart yang mudah dibaca.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-filter"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Filter & Sorting Data</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Menyaring dan mengurutkan data besar berdasarkan kriteria tertentu dengan cepat dan efisien.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-table-cells"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Pivot Table</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Meringkas, menganalisis, dan mengeksplorasi data ribuan baris dalam hitungan detik.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts List for Excel -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 sticky top-24 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-emerald-600"></i> Shortcut MS Excel
+                            </h4>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">14 Shortcut</span>
+                        </div>
+                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="excel-shortcuts-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: MS POWERPOINT ==================== -->
+        <section id="tab-powerpoint" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-gradient-to-r from-orange-700 to-amber-800 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/20 text-orange-100">
+                        <i class="fa-solid fa-file-powerpoint"></i> Microsoft PowerPoint Module
+                    </div>
+                    <h2 class="text-3xl font-extrabold">Microsoft PowerPoint</h2>
+                    <p class="text-orange-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Aplikasi presentasi multimedia profesional untuk menyampaikan ide, materi kuliah, atau proposal bisnis dengan slide yang memukau.
+                    </p>
+                </div>
+                <div class="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center p-3 text-orange-600 text-4xl font-black shrink-0">
+                    <i class="fa-solid fa-file-powerpoint"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-orange-600"></i> Pengertian & Fungsi Microsoft PowerPoint
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>Microsoft PowerPoint</strong> adalah software presentasi yang dikembangkan oleh Microsoft. Fungsinya adalah membantu pengguna menyusun slide tayangan multimedia yang berisi teks, gambar, video, animasi, dan transisi untuk keperluan presentasi bisnis, pendidikan, maupun seminar publik.
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-orange-600"></i> Fitur Utama MS PowerPoint
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Slide Layout & Desain</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Menyediakan berbagai pilihan tata letak slide dan tema desain visual yang profesional.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Transisi & Animasi</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Efek perpindahan slide yang mulus (seperti Morph) dan animasi objek teks yang dinamis.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-photo-film"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Multimedia & Audio</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Menyisipkan video latar belakang, klip musik, atau rekaman suara narasi pada tayangan.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-tv"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Slide Show & Presenter View</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mode tayang layar penuh lengkap dengan catatan pembicara (speaker notes) dan timer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts List for PowerPoint -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 sticky top-24 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-orange-600"></i> Shortcut PowerPoint
+                            </h4>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-orange-50 text-orange-700">10 Shortcut</span>
+                        </div>
+                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="powerpoint-shortcuts-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: CORELDRAW ==================== -->
+        <section id="tab-coreldraw" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-gradient-to-r from-amber-600 to-orange-700 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/20 text-amber-100">
+                        <i class="fa-solid fa-pen-nib"></i> CorelDRAW Design Module
+                    </div>
+                    <h2 class="text-3xl font-extrabold">CorelDRAW Graphics Suite</h2>
+                    <p class="text-amber-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Software editor grafis vektor terkemuka di dunia untuk pembuatan logo, ilustrasi, brosur, banner, sablon kaos, dan media promosi cetak.
+                    </p>
+                </div>
+                <!-- Logo Terbaru CorelDRAW (SVG / Modern Icon) -->
+                <div class="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center p-3 text-amber-600 text-4xl font-black shrink-0">
+                    <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="22" fill="#FF7300"/>
+                        <path d="M30 35H45V65H30V35Z" fill="white"/>
+                        <path d="M50 45H70V55H50V45Z" fill="white"/>
+                        <path d="M30 35H70V42H30V35Z" fill="white" fill-opacity="0.7"/>
+                        <circle cx="60" cy="70" r="8" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-amber-600"></i> Pengertian & Fungsi CorelDRAW
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>CorelDRAW</strong> adalah software editor grafik vektor yang dikembangkan oleh Corel Corporation berbasis di Ottawa, Kanada. Berbeda dengan software berbasis raster (pixel), CorelDRAW menggunakan rumus matematika untuk membentuk garis, kurva, dan objek. Hal ini membuat gambar grafis tidak akan pecah atau mengalami penurunan kualitas meskipun diperbesar (scalable).
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-amber-600"></i> Fitur Utama CorelDRAW
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-vector-square"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Grafik Berbasis Vektor</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Membuat objek kurva bebas, logo, dan simbol dengan ketajaman sempurna tanpa batas ukuran.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-scissors"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Shaping & Pathfinder</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Alat Weld, Trim, Intersect, dan Simplify untuk menggabungkan atau memotong bentuk objek.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-font"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Typography & Text Editor</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengatur teks artistik, membuat teks melingkar mengikuti objek (Fit Text to Path), dan efek tipografi.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-print"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Cetak & Layout Publikasi</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Pengaturan halaman multi-page untuk pembuatan brosur, majalah, kartu nama, dan spanduk.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts List for CorelDRAW -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 sticky top-24 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-amber-600"></i> Shortcut CorelDRAW
+                            </h4>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">14 Shortcut</span>
+                        </div>
+                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="coreldraw-shortcuts-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: PHOTOSHOP ==================== -->
+        <section id="tab-photoshop" class="hidden space-y-8 animate-fade-in">
+            <div class="bg-gradient-to-r from-blue-700 to-sky-600 rounded-3xl p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/20 text-sky-100">
+                        <i class="fa-solid fa-image"></i> Adobe Photoshop Design Module
+                    </div>
+                    <h2 class="text-3xl font-extrabold">Adobe Photoshop</h2>
+                    <p class="text-sky-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Standar industri global untuk penyuntingan gambar berbasis raster, manipulasi foto tingkat lanjut, digital painting, dan desain antarmuka.
+                    </p>
+                </div>
+                <!-- Logo Terbaru Adobe Photoshop (SVG / Modern Icon) -->
+                <div class="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center p-3 text-sky-600 text-4xl font-black shrink-0">
+                    <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="22" fill="#001E36"/>
+                        <path d="M30 35H45C52 35 56 39 56 46C56 53 52 57 45 57H38V65H30V35ZM38 50H44C47 50 49 48 49 46C49 44 47 42 44 42H38V50Z" fill="#31A8FF"/>
+                        <path d="M60 42H70V48H60V65H52V35H72V42H60Z" fill="#31A8FF"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-sky-600"></i> Pengertian & Fungsi Adobe Photoshop
+                        </h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            <strong>Adobe Photoshop</strong> adalah perangkat lunak editor grafis raster (berbasis piksel) yang dikembangkan oleh Adobe Inc. Photoshop digunakan secara luas untuk pengeditan foto, manipulasi gambar tingkat lanjut, pembuatan komposisi visual, desain poster digital, hingga pembuatan aset antarmuka web dan aplikasi seluler.
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-7 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-sky-600"></i> Fitur Utama Adobe Photoshop
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Sistem Layer & Masking</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengatur objek dan efek secara terpisah dalam lapisan (layers) tanpa merusak gambar asli.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-wand-magic"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Retouching & Healing</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Menghilangkan noda pada foto, memperbaiki objek rusak, dan memperhalus tekstur kulit.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Adjustment & Color Grading</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengatur pencahayaan, kontras, saturasi warna, Curves, dan Levels secara presisi.</p>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-brush"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">Brush & Digital Painting</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">Berbagai jenis kuas digital untuk melukis, membuat sketsa, dan ilustrasi digital kreatif.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts List for Photoshop -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 sticky top-24 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-keyboard text-sky-600"></i> Shortcut Photoshop
+                            </h4>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-sky-50 text-sky-700">14 Shortcut</span>
+                        </div>
+                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1" id="photoshop-shortcuts-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: ABOUT / TENTANG ==================== -->
+        <section id="tab-about" class="hidden space-y-10 animate-fade-in">
+            <!-- About Developer Card -->
+            <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        <i class="fa-solid fa-code"></i> Informasi Pengembang & Platform
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Tentang Office Master & Design</h2>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        Aplikasi web pembelajaran interaktif <strong>"Office Master"</strong> ini dikembangkan secara profesional oleh:
+                    </p>
+                    <div class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-2xl font-black shadow-lg">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs text-indigo-300 font-bold uppercase tracking-wider block">Lead Developer & Creator</span>
+                            <h3 class="text-xl sm:text-2xl font-extrabold text-white">MUHAMMAD DAVID BECKHAM</h3>
+                            <p class="text-xs text-slate-300 mt-1">Pusat Edukasi Teknologi Perkantoran & Desain Kreatif</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What is Microsoft Office Section -->
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">Apa itu Microsoft Office?</h3>
+                        <p class="text-xs text-slate-500 font-medium">Sejarah & Peran Penting dalam Produktivitas Modern</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
+                    <p>
+                        <strong>Microsoft Office</strong> adalah paket perangkat lunak perkantoran (office suite) yang dikembangkan oleh Microsoft Corporation pertama kali diumumkan oleh Bill Gates pada tanggal 1 Agustus 1988 di COMDEX di Las Vegas.
+                    </p>
+                    <p>
+                        Paket aplikasi ini dirancang khusus untuk automasi tugas-tugas administratif perkantoran, pendidikan, dan bisnis. Komponen utamanya yang paling populer meliputi:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <div class="p-5 rounded-2xl bg-blue-50/60 border border-blue-100 space-y-2">
+                            <h4 class="font-bold text-blue-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-word text-blue-600"></i> MS Word
+                            </h4>
+                            <p class="text-xs text-slate-600">Standar emas pengolah kata untuk penulisan surat, laporan, dan dokumen teks.</p>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-emerald-50/60 border border-emerald-100 space-y-2">
+                            <h4 class="font-bold text-emerald-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-excel text-emerald-600"></i> MS Excel
+                            </h4>
+                            <p class="text-xs text-slate-600">Pengolah angka dan spreadsheet untuk perhitungan tabel, akuntansi, dan analisis data.</p>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-orange-50/60 border border-orange-100 space-y-2">
+                            <h4 class="font-bold text-orange-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-powerpoint text-orange-600"></i> MS PowerPoint
+                            </h4>
+                            <p class="text-xs text-slate-600">Media presentasi visual interaktif untuk menyampaikan ide dan materi secara menarik.</p>
+                        </div>
+                    </div>
+                    <p class="pt-2">
+                        Dengan menggabungkan aplikasi perkantoran tersebut bersama software desain grafis profesional seperti <strong>CorelDRAW</strong> dan <strong>Adobe Photoshop</strong> dalam satu platform, web <strong>Office Master & Design</strong> hadir untuk mencetak individu yang produktif dan kreatif di era digital.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 border-t border-slate-200 bg-white py-10 text-center text-sm text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-slate-800">Office Master & Design Hub</span>
+                <span>&copy; 2026 Developed by MUHAMMAD DAVID BECKHAM</span>
+            </div>
+            <div class="flex items-center space-x-4 text-xs font-semibold">
+                <span class="hover:text-blue-600 cursor-pointer" onclick="switchTab('word')">Word</span>
+                <span>&bull;</span>
+                <span class="hover:text-emerald-600 cursor-pointer" onclick="switchTab('excel')">Excel</span>
+                <span>&bull;</span>
+                <span class="hover:text-orange-600 cursor-pointer" onclick="switchTab('powerpoint')">PowerPoint</span>
+                <span>&bull;</span>
+                <span class="hover:text-amber-600 cursor-pointer" onclick="switchTab('coreldraw')">CorelDRAW</span>
+                <span>&bull;</span>
+                <span class="hover:text-sky-600 cursor-pointer" onclick="switchTab('photoshop')">Photoshop</span>
+                <span>&bull;</span>
+                <span class="hover:text-indigo-600 cursor-pointer" onclick="switchTab('about')">Tentang</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Master Shortcut Lengkap untuk Semua Aplikasi
+        const shortcutsDatabase = {
+            Word: [
+                { keys: 'Ctrl + C', desc: 'Menyalin (copy) teks atau objek yang dipilih.' },
+                { keys: 'Ctrl + V', desc: 'Menempelkan (paste) teks atau objek yang disalin.' },
+                { keys: 'Ctrl + X', desc: 'Memotong (cut) teks atau objek yang dipilih.' },
+                { keys: 'Ctrl + Z', desc: 'Membatalkan aksi terakhir (undo).' },
+                { keys: 'Ctrl + Y', desc: 'Mengulangi aksi yang dibatalkan (redo).' },
+                { keys: 'Ctrl + A', desc: 'Memilih seluruh teks dalam dokumen (select all).' },
+                { keys: 'Ctrl + B', desc: 'Membuat teks menjadi tebal (bold).' },
+                { keys: 'Ctrl + I', desc: 'Membuat teks menjadi miring (italic).' },
+                { keys: 'Ctrl + U', desc: 'Memberikan garis bawah pada teks (underline).' },
+                { keys: 'Ctrl + F', desc: 'Mencari kata atau frasa dalam dokumen (find).' },
+                { keys: 'Ctrl + H', desc: 'Mencari dan mengganti kata (find & replace).' },
+                { keys: 'Ctrl + S', desc: 'Menyimpan dokumen (save).' },
+                { keys: 'Ctrl + P', desc: 'Mencetak dokumen (print).' },
+                { keys: 'Ctrl + L', desc: 'Rata kiri teks (align left).' },
+                { keys: 'Ctrl + E', desc: 'Rata tengah teks (center).' },
+                { keys: 'Ctrl + R', desc: 'Rata kanan teks (align right).' },
+                { keys: 'Ctrl + J', desc: 'Rata kiri-kanan teks (justify).' }
+            ],
+            Excel: [
+                { keys: 'Ctrl + C', desc: 'Menyalin sel atau rentang data terpilih.' },
+                { keys: 'Ctrl + V', desc: 'Menempelkan data yang disalin ke sel.' },
+                { keys: 'Ctrl + A', desc: 'Memilih seluruh lembar kerja / tabel.' },
+                { keys: 'Ctrl + Shift + L', desc: 'Mengaktifkan/menonaktifkan filter tabel.' },
+                { keys: 'Alt + =', desc: 'Memasukkan rumus Penjumlahan otomatis (SUM).' },
+                { keys: 'Ctrl + ;', desc: 'Memasukkan tanggal hari ini ke sel.' },
+                { keys: 'Ctrl + Shift + :', desc: 'Memasukkan waktu saat ini ke sel.' },
+                { keys: 'F2', desc: 'Mengedit sel aktif yang dipilih.' },
+                { keys: 'F4', desc: 'Mengunci referensi sel dalam rumus (absolut).' },
+                { keys: 'Ctrl + Arrow Keys', desc: 'Pindah cepat ke ujung data baris/kolom.' },
+                { keys: 'Ctrl + Page Down', desc: 'Pindah ke lembar kerja (sheet) berikutnya.' },
+                { keys: 'Ctrl + Page Up', desc: 'Pindah ke lembar kerja sebelumnya.' },
+                { keys: 'Ctrl + 1', desc: 'Membuka kotak dialog Format Cells.' },
+                { keys: 'Ctrl + Shift + $', desc: 'Format angka menjadi mata uang (currency).' }
+            ],
+            PowerPoint: [
+                { keys: 'F5', desc: 'Memulai presentasi dari slide pertama.' },
+                { keys: 'Shift + F5', desc: 'Memulai presentasi dari slide aktif.' },
+                { keys: 'Ctrl + M', desc: 'Menambahkan slide baru (New Slide).' },
+                { keys: 'Ctrl + D', desc: 'Menduplikasi objek atau slide terpilih.' },
+                { keys: 'Esc', desc: 'Keluar dari mode tayang presentasi.' },
+                { keys: 'B', desc: 'Mengubah layar menjadi hitam penuh saat slide show.' },
+                { keys: 'W', desc: 'Mengubah layar menjadi putih penuh saat slide show.' },
+                { keys: 'Ctrl + G', desc: 'Mengelompokkan (group) beberapa objek.' },
+                { keys: 'Ctrl + Shift + G', desc: 'Memisahkan kelompok objek (ungroup).' },
+                { keys: 'Ctrl + K', desc: 'Menambahkan hyperlink pada teks/objek.' }
+            ],
+            CorelDRAW: [
+                { keys: 'Spacebar', desc: 'Berpindah antara Pick Tool dan alat terakhir.' },
+                { keys: 'Ctrl + C', desc: 'Menyalin objek terpilih ke clipboard.' },
+                { keys: 'Ctrl + V', desc: 'Menempelkan objek dari clipboard.' },
+                { keys: 'Ctrl + G', desc: 'Mengelompokkan objek terpilih (Group).' },
+                { keys: 'Ctrl + U', desc: 'Memisahkan kelompok objek (Ungroup).' },
+                { keys: 'Ctrl + Q', desc: 'Mengubah teks atau objek menjadi Curves.' },
+                { keys: 'F4', desc: 'Zoom agar semua objek tampil di layar.' },
+                { keys: 'F3', desc: 'Zoom Out memperkecil tampilan kanvas.' },
+                { keys: 'F9', desc: 'Menampilkan layar penuh preview desain (Full Screen).' },
+                { keys: 'P', desc: 'Menempatkan objek tepat di tengah halaman kanvas (Center).' },
+                { keys: 'E', desc: 'Meratakan objek secara vertikal (Align Center Vertically).' },
+                { keys: 'C', desc: 'Meratakan objek secara horizontal (Align Center Horizontally).' },
+                { keys: 'Ctrl + I', desc: 'Mengimpor file gambar/vektor (Import).' },
+                { keys: 'Ctrl + E', desc: 'Mengekspor file desain (Export).' }
+            ],
+            Photoshop: [
+                { keys: 'V', desc: 'Move Tool untuk memindahkan objek atau layer.' },
+                { keys: 'B', desc: 'Brush Tool untuk melukis dan mewarnai.' },
+                { keys: 'E', desc: 'Eraser Tool untuk menghapus bagian gambar.' },
+                { keys: 'T', desc: 'Horizontal Type Tool untuk mengetik teks.' },
+                { keys: 'Ctrl + N', desc: 'Membuat dokumen baru (New Document).' },
+                { keys: 'Ctrl + O', desc: 'Membuka file gambar (Open).' },
+                { keys: 'Ctrl + S', desc: 'Menyimpan file proyek Photoshop (PSD).' },
+                { keys: 'Ctrl + Shift + S', desc: 'Menyimpan sebagai (Save As / Export).' },
+                { keys: 'Ctrl + T', desc: 'Transform Free untuk mengubah ukuran/rotasi objek.' },
+                { keys: 'Ctrl + J', desc: 'Menduplikasi layer aktif (Layer via Copy).' },
+                { keys: 'Ctrl + Z', desc: 'Undo langkah terakhir.' },
+                { keys: 'Ctrl + Alt + Z', desc: 'Undo beruntun ke belakang (Step Backward).' },
+                { keys: 'Ctrl + Shift + N', desc: 'Membuat layer baru kosong.' },
+                { keys: 'D', desc: 'Mengatur warna Foreground & Background ke default Hitam/Putih.' }
+            ]
+        };
+
+        // Fungsi Navigasi Tab
+        function switchTab(tabId) {
+            const tabs = ['home', 'word', 'excel', 'powerpoint', 'coreldraw', 'photoshop', 'about'];
+            tabs.forEach(t => {
+                const section = document.getElementById(`tab-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                if (section) {
+                    if (t === tabId) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                }
+                if (navBtn) {
+                    if (t === tabId) {
+                        navBtn.className = "px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-blue-600 bg-blue-50";
+                    } else {
+                        navBtn.className = "px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-blue-600 hover:bg-slate-100";
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Shortcuts List dinamis untuk setiap halaman aplikasi
+        function renderAllShortcutsLists() {
+            ['Word', 'Excel', 'PowerPoint', 'CorelDRAW', 'Photoshop'].forEach(app => {
+                const containerId = `${app.toLowerCase()}-shortcuts-list`;
+                const container = document.getElementById(containerId);
+                if (container && shortcutsDatabase[app]) {
+                    let html = '';
+                    shortcutsDatabase[app].forEach(item => {
+                        html += `
+                            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100 hover:bg-slate-100/60 transition-colors">
+                                <span class="text-xs text-slate-700 font-medium truncate max-w-[190px]" title="${item.desc}">${item.desc}</span>
+                                <kbd class="px-2 py-1 rounded-lg bg-white border border-slate-200 font-mono text-xs font-bold text-slate-900 shadow-xs shrink-0">${item.keys}</kbd>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+            });
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.onload = function() {
+            renderAllShortcutsLists();
+        };
+    </script>
+</body>
+</html>
